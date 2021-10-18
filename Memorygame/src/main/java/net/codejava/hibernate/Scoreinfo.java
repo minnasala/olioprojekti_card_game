@@ -40,7 +40,7 @@ public class Scoreinfo {
 		return score;
 	}
 
-
+	//git test
 	public void setScore(int score) {
 		this.score = score;
 	}
