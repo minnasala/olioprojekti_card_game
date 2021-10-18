@@ -93,9 +93,9 @@ public class ScoreinfoManager {
         manager.setup();
         System.out.println("setup done");
         //manager.create("paraspelaaja", 4);
-        //manager.read(1);
+        manager.read(3);
         //manager.update(3, "Sara", 7);
-        manager.delete(5);
+        //manager.delete(5);
         
         manager.exit();
 
