@@ -27,7 +27,7 @@ public class ScoreinfoManager {
     	
     }
  
-    protected void create(String user_name, int score) {
+    public void create(String user_name, int score) {
         // code to save scoreinfo
     	Scoreinfo scoreinfo = new Scoreinfo();
         scoreinfo.setUser_name(user_name);
@@ -43,7 +43,7 @@ public class ScoreinfoManager {
         session.close();
     }
  
-    protected void read(int id) {
+    public void read(int id) {
         // code to get a scoreinfo
     	Session session = sessionFactory.openSession();
    	 
@@ -56,7 +56,7 @@ public class ScoreinfoManager {
         session.close();
     }
  
-    protected void update(int id, String user_name, int score) {
+    public void update(int id, String user_name, int score) {
         // code to modify a scoreinfo
     	Scoreinfo scoreinfo = new Scoreinfo();
         scoreinfo.setId(id);
@@ -73,7 +73,7 @@ public class ScoreinfoManager {
         session.close();
     }
  
-    protected void delete(int id) {
+    public void delete(int id) {
         // code to remove a scoreinfo
         Scoreinfo scoreinfo = new Scoreinfo();
         scoreinfo.setId(id);
@@ -88,7 +88,7 @@ public class ScoreinfoManager {
     }
 
 	public static void main(String[] args) {
-		System.out.println("hello");
+		System.out.println("test");
     	ScoreinfoManager manager = new ScoreinfoManager();
         manager.setup();
         System.out.println("setup done");
