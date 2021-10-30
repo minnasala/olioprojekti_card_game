@@ -1,4 +1,9 @@
-package net.codejava.hibernate;
+package application;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,18 +26,17 @@ public class ScoreinfoManager {
     	}
     }
  
-    protected void exit() {
+    public void exit() {
         // code to close Hibernate Session factory
     	sessionFactory.close();
     	
     }
  
-    public void create(String user_name, int score) {
+    public void create(String user_name, int score) {  	
         // code to save scoreinfo
     	Scoreinfo scoreinfo = new Scoreinfo();
         scoreinfo.setUser_name(user_name);
         scoreinfo.setScore(score);
-
      
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -54,6 +58,16 @@ public class ScoreinfoManager {
 
      
         session.close();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<Scoreinfo> getAll() {
+    	Session session = sessionFactory.openSession();
+      	 
+        TypedQuery<Scoreinfo> query =  session.createQuery("from scoreinfo");
+        List<Scoreinfo> result = query.getResultList();	
+        session.close();
+        return result;
     }
  
     public void update(int id, String user_name, int score) {
@@ -88,10 +102,9 @@ public class ScoreinfoManager {
     }
 
 	public static void main(String[] args) {
-		System.out.println("test");
     	ScoreinfoManager manager = new ScoreinfoManager();
         manager.setup();
-        System.out.println("setup done");
+        
         //manager.create("paraspelaaja", 4);
         manager.read(3);
         //manager.update(3, "Sara", 7);

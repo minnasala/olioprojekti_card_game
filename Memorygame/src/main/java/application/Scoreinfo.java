@@ -1,4 +1,4 @@
-package net.codejava.hibernate;
+package application;
 
 import javax.persistence.*;
 
