@@ -1,6 +1,8 @@
 package application;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import application.ScoreinfoManager;
@@ -20,7 +22,7 @@ public class FxFXMLController {
 	
 	ObservableList<Scoreinfo> data = FXCollections.observableArrayList();
 
-	@FXML private TableColumn<Scoreinfo, String> colRanking = new TableColumn<>("#"); 
+	@FXML private TableColumn<Scoreinfo, String> colID = new TableColumn<>("#"); 
 	@FXML private TableColumn<Scoreinfo, String> colName = new TableColumn<>("NIMIMERKKI");
     @FXML private TableColumn<Scoreinfo, String> colScore = new TableColumn<>("PISTEET");
 
@@ -45,33 +47,38 @@ public class FxFXMLController {
     	System.out.print("test");
     	System.out.print(data.size());
     	
-    	
-    	colName.setCellValueFactory(new PropertyValueFactory<Scoreinfo, String>("name"));
+    	colID.setCellValueFactory(new PropertyValueFactory<Scoreinfo, String>("id"));
+    	colName.setCellValueFactory(new PropertyValueFactory<Scoreinfo, String>("user_name"));
     	colScore.setCellValueFactory(new PropertyValueFactory<Scoreinfo, String>("score"));
     	
     	tblScore.setItems(data);
-    	tblScore.getColumns().addAll(colRanking, colName, colScore);
+    	tblScore.getColumns().addAll(colID, colName, colScore);
+    	
+    	getTopTen(); //Get top 10 players
     }
-
+    
+    private void getTopTen() {
+    	ScoreinfoManager scoreinfoManager = new ScoreinfoManager();
+    	scoreinfoManager.setup();
+    	data.clear(); //Clear list
+    	data.addAll(scoreinfoManager.getAll()); //Get top 10 from DB
+        for (int i=0; i < data.size(); i++) { //Set rankings
+        	data.get(i).setId(i+1);
+        }
+        scoreinfoManager.exit();
+    }
+    
+    
 	@FXML
     private void printOutput() {
-		
-		ScoreinfoManager scoreinfoManager = new ScoreinfoManager();
-		//scoreinfoManager.create("haha", 1);
-		scoreinfoManager.setup();
-		scoreinfoManager.read(3);
-		scoreinfoManager.exit();
-		//data.addAll(scoreinfoManager.getAll());
-		//data = FXCollections.observableArrayList(scoreinfoManager.getAll());
-		
-		//if ((textName.getText().isBlank() || textScore.getText().isBlank()) && (textName.getText().isEmpty() || textScore.getText().isEmpty())){
-		//	System.out.println("ei voi lisätä tyhjää");
-		//	textName.setText(null);
-    	//	textScore.setText(null);
-    	//} else {
-    	//	data.add(new Scoreinfo(textName.getText(), textScore.getText()));
-    	//	textName.setText(null);
-    	//	textScore.setText(null);
-    	//}
+		if ((textName.getText().isBlank() || textName.getText().isEmpty())){
+			textName.setText(null);
+    	} else {
+    		ScoreinfoManager scoreinfoManager = new ScoreinfoManager(); //Database object
+    		scoreinfoManager.setup(); //Open DB connection
+    		scoreinfoManager.create(textName.getText(), Integer.valueOf(textScore.getText())); //Create new entry to DB
+    		scoreinfoManager.exit(); //Close DB connection
+    		getTopTen(); //Get top 10 players
+    	}
 	}
 }

@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.criterion.Order;
 
 public class ScoreinfoManager {
 	protected SessionFactory sessionFactory;
@@ -62,12 +63,14 @@ public class ScoreinfoManager {
     
     @SuppressWarnings("unchecked")
     public List<Scoreinfo> getAll() {
-    	Session session = sessionFactory.openSession();
-      	 
-        TypedQuery<Scoreinfo> query =  session.createQuery("from scoreinfo");
-        List<Scoreinfo> result = query.getResultList();	
-        session.close();
-        return result;
+    	Session session = sessionFactory.openSession();   	
+    	List<Scoreinfo> myList = new ArrayList<Scoreinfo>(session.createCriteria(Scoreinfo.class)
+    			.addOrder(Order.desc("score"))
+    			.setMaxResults(10)
+    			.list());   	
+    	session.close();
+    	
+    	return myList;
     }
  
     public void update(int id, String user_name, int score) {
@@ -105,8 +108,12 @@ public class ScoreinfoManager {
     	ScoreinfoManager manager = new ScoreinfoManager();
         manager.setup();
         
-        //manager.create("paraspelaaja", 4);
-        manager.read(3);
+        //List<Scoreinfo> myList = new ArrayList<Scoreinfo>(manager.getAll());
+        //for (int i=0; i < myList.size(); i++) {
+        //	System.out.println(myList.get(i).getUser_name());
+        //}
+      //manager.create();
+        //manager.read(4);
         //manager.update(3, "Sara", 7);
         //manager.delete(5);
         
