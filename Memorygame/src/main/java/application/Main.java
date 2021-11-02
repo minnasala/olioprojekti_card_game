@@ -30,7 +30,8 @@ public class Main extends Application {
         	FXMLLoader loader = new FXMLLoader();
         	
         	// Path to the FXML File
-            String fxmlDocPath = "C:\\Users\\lippo\\eclipse-workspace2\\ProjectFX\\src\\application\\FxFXML.fxml";  // VIITTAUS FXML-TIEDOSTOON
+           
+            String fxmlDocPath = "src\\main\\java\\application\\FxFXML.fxml";  // VIITTAUS FXML-TIEDOSTOON
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
             
             // Create the Pane and all Details FROM FXML -FILE
@@ -42,8 +43,8 @@ public class Main extends Application {
 			
 			
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
-			Image icon = new Image("C:\\Users\\lippo\\eclipse-workspace2\\ProjectFX\\src\\kuvat\\logo.png");
+
+			Image icon = new Image(".\\kuvat\\logo.png");
 			primaryStage.getIcons().add(icon);
 			primaryStage.setTitle("   Muistipeli");
 			primaryStage.setResizable(false);

@@ -65,7 +65,7 @@ public class ScoreinfoManager {
     public List<Scoreinfo> getAll() {
     	Session session = sessionFactory.openSession();   	
     	List<Scoreinfo> myList = new ArrayList<Scoreinfo>(session.createCriteria(Scoreinfo.class)
-    			.addOrder(Order.desc("score"))
+    			.addOrder(Order.asc("score"))
     			.setMaxResults(10)
     			.list());   	
     	session.close();
@@ -104,21 +104,11 @@ public class ScoreinfoManager {
         session.close();
     }
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
     	ScoreinfoManager manager = new ScoreinfoManager();
         manager.setup();
-        
-        //List<Scoreinfo> myList = new ArrayList<Scoreinfo>(manager.getAll());
-        //for (int i=0; i < myList.size(); i++) {
-        //	System.out.println(myList.get(i).getUser_name());
-        //}
-      //manager.create();
-        //manager.read(4);
-        //manager.update(3, "Sara", 7);
-        //manager.delete(5);
-        
         manager.exit();
 
-	}
+	}*/
 
 }
